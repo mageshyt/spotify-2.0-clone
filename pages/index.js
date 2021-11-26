@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Center from "../components/Center";
 import Slider from "../components/Slider";
 
 export default function Home() {
@@ -8,10 +9,11 @@ export default function Home() {
         {" "}
         <title>Spotify clone</title>
       </Head>
-      <main>
+      <main className="flex">
         {/* slider */}
         <Slider />
         {/* Center */}
+        <Center />
       </main>
       <div>{/* Player */}</div>
     </div>

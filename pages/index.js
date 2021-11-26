@@ -3,7 +3,7 @@ import Slider from "../components/Slider";
 
 export default function Home() {
   return (
-    <div className="flex bg-[#121212] flex-col items-center justify-center min-h-screen py-2">
+    <div className="bg-black h-screen overflow-hidden">
       <Head>
         {" "}
         <title>Spotify clone</title>

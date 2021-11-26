@@ -6,14 +6,19 @@ import {
   HeartIcon,
   RssIcon,
 } from "@heroicons/react/outline";
-
+import { signOut, useSession } from "next-auth/react";
 const Slider = () => {
+  const { data: session, status } = useSession();
+  console.log(" 🔥 session", session);
   return (
     <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
       {/* Icons container */}
       <div className="space-y-4">
         {/* Home */}
-        <button className="flex  items-center space-x-2 hover:text-white ">
+        <button
+          onClick={() => signOut()}
+          className="flex  items-center space-x-2 hover:text-white "
+        >
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
         </button>

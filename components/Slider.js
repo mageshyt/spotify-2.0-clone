@@ -38,6 +38,7 @@ const Slider = () => {
       lg:max-w-[15rem]
       hidden 
       md:inline
+      pb-36
       "
     >
       {/* Icons container */}

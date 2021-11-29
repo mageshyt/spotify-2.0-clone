@@ -1,6 +1,9 @@
 import Head from "next/head";
 import Center from "../components/Center";
 import Slider from "../components/Slider";
+import { getSession } from "next-auth/react";
+import { Player } from "../components/Player";
+// import Player from "../components/Player";
 
 export default function Home() {
   return (
@@ -15,7 +18,20 @@ export default function Home() {
         {/* Center */}
         <Center />
       </main>
-      <div>{/* Player */}</div>
+      <div className="sticky bottom-0">
+        {/* Player */}
+        <Player />
+      </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session,
+    },
+  };
 }

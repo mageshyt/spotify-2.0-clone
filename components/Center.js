@@ -1,9 +1,10 @@
 import { ChevronDownIcon } from "@heroicons/react/outline";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { playlistIdState, playlistState } from "../atom/playlistAtom";
 import useSpotify from "../hooks/useSpotify";
+import Songs from "./Songs";
 const Center = () => {
   const { data: session } = useSession();
   // !colors
@@ -26,30 +27,37 @@ const Center = () => {
   // ! playlist setPlaylist
   const [playlist, setPlaylist] = useRecoilState(playlistState);
   useEffect(() => {
-    const random = Math.floor(Math.random() * colors.length);
+    const random = Math.floor(Math.random() * colors.length); //! random color
     SetColor(colors[random]);
-  }, [playlistId]);
+  }, [spotifyApi, playlistId]);
 
   // ! get the songs in the playlist
   useEffect(() => {
-    spotifyApi.getPlaylist(playlistId).then((res) => {
-      setPlaylist(res);
-    });
-  }, [playlistId]);
+    spotifyApi
+      .getPlaylist(playlistId)
+      .then((res) => {
+        setPlaylist(res);
+      })
+      .catch((err) => {
+        console.log("something went wrong 😟", err);
+      });
+  }, [playlistId]); //  ! refresh the color when id changes
 
-  console.log(playlist);
+  // console.log(playlist);
   return (
-    <div className="  flex-grow">
+    <div className=" h-screen overflow-y-scroll   flex-grow">
       {/* header */}
       <header>
         {/* user */}
         <div
-          className="flex absolute  p-0.5 top-5 
-        right-8 text-white rounded-full pr-2 bg-black space-x-3 justify-center opacity-90
+          onClick={() => signOut()}
+          className="flex absolute z-50 p-0.5 top-5  cursor-pointer
+        right-8 text-white rounded-full pr-2 bg-[#121212] 
+        space-x-3 justify-center opacity-90
          hover:opacity-80 items-center"
         >
           <img
-            className="w-10 rounded-full h-10 "
+            className="w-10 border-2 border-purple-500 rounded-full h-10 cursor-pointer "
             src={
               session?.user?.image ||
               "https://yt3.ggpht.com/yti/APfAmoHbKoAeEXXrRTErK9XKuQPTALV321TVh3TtuRh6=s88-c-k-c0x00ffffff-no-rj-mo"
@@ -58,7 +66,7 @@ const Center = () => {
           />
           {/* user name */}
           <h2>{session?.user?.name}</h2>
-          <ChevronDownIcon className="h-5 w-5" />
+          <ChevronDownIcon className="h-4 w-4" />
         </div>
       </header>
       <section
@@ -79,6 +87,9 @@ const Center = () => {
           </h1>
         </div>
       </section>
+      <div>
+        <Songs />
+      </div>
     </div>
   );
 };

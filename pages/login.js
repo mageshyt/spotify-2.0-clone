@@ -1,14 +1,23 @@
 import { getProviders, signIn } from "next-auth/react";
+import Head from "next/head";
 
-const Login = ({ providers }) => {
+function Login({ providers }) {
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col bg-black">
-      <img src="https://links.papareact.com/9xl" alt="" className="w-48 mb-5" />
+    <div className="flex flex-col items-center bg-black min-h-screen w-full justify-center">
+      <Head>
+        <title>Spotify 2.0</title>
+        <link
+          rel="icon"
+          href="https://headabovemusic.com/wp-content/uploads/2017/08/Spotify-icon.png"
+        />
+      </Head>
+      <img className="w-52 mb-5" src="https://links.papareact.com/9xl" alt="" />
+
       {Object.values(providers).map((provider) => (
-        <div key={provider.name}>
+        <div key={provider.name} className="">
           <button
-            className="bg-[#18D860] text-white p-4 rounded-lg"
             onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+            className="bg-[#18D860] text-white p-5 rounded-lg"
           >
             Login with {provider.name}
           </button>
@@ -16,9 +25,10 @@ const Login = ({ providers }) => {
       ))}
     </div>
   );
-};
+}
 
 export default Login;
+
 export async function getServerSideProps() {
   const providers = await getProviders();
 

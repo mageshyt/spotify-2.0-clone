@@ -1,27 +1,29 @@
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
-import spotifyApi, { LOGIN_URL } from "../../../lib/spotify";
-
+import { LOGIN_URL } from "../../../lib/spotify";
+import { useSpotify } from "../../../lib/spotify";
 // * refresh token
-async function refreshAccessToken() {
+
+async function refreshAccessToken(token) {
+  const spotifyApi = await useSpotify();
   try {
-    spotifyApi.setAccessToken(token.accessToken);
-    spotifyApi.setRefreshToken(token.refreshToken);
-    // !we sending both value to spotify
-    const { body: refreshToken } = await spotifyApi.refreshAccessToken();
-    console.log("refreshToken is ", refreshToken);
+    SpotifyApi.setAccessToken(token.accessToken);
+    SpotifyApi.setRefreshToken(token.refreshToken);
+
+    const { body: refreshedToken } = await SpotifyApi.refreshAccessToken();
     return {
       ...token,
-      accessToken: refreshToken.access_token,
-      accessTokenExpires: Date.now() + refreshToken.expires_in * 1000, // 1 hrs,
-      refreshToken: refreshToken.refresh_token ?? token.refreshToken,
+      accessToken: refreshedToken.access_token,
+      accessTokenExpires: Date.now() + refreshedToken.expires_in * 1000,
+      refreshToken: refreshedToken.refresh_token ?? token.refreshToken,
     };
   } catch (err) {
-    console.log(err);
+    console.error(err);
+
     return {
       ...token,
-      error: "RefreshAccessTokenError",
+      error: "RefreshAcessTokenError",
     };
   }
 }
@@ -67,7 +69,6 @@ export default NextAuth({
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
       session.user.username = token.username;
-
       return session;
     },
   },

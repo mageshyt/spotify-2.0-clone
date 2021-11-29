@@ -22,12 +22,12 @@ const Slider = () => {
   const spotifyApi = useSpotify();
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
-      spotifyApi.getUserPlaylists().then((res) => {
-        setPlaylist(res.items);
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylist(data.items);
       });
     }
   }, [session]);
-  console.log(playlistId);
+  // console.log(playlistId);
   return (
     <div
       className=" h-screen 
@@ -43,15 +43,6 @@ const Slider = () => {
       {/* Icons container */}
       <div className="space-y-4">
         {/* Home */}
-        {session && (
-          <button
-            onClick={() => signOut()}
-            className="flex  items-center space-x-2 hover:text-white "
-          >
-            <LogoutIcon className="h-5 w-5" />
-            <p>Sign out</p>
-          </button>
-        )}
 
         <button className="flex  items-center space-x-2 hover:text-white ">
           <HomeIcon className="h-5 w-5" />

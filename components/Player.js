@@ -83,7 +83,7 @@ export const Player = () => {
     <div
       className="h-24 bg-gradient-to-b
      text-white from-black to-gray-900
-     grid grid-cols-3 text-xs md:text-base md:px-8
+     grid grid-cols-2 text-xs md:text-base px-8 md:grid-cols-3
      "
     >
       {/* Left side */}
@@ -91,7 +91,7 @@ export const Player = () => {
         <img
           src={songInfo?.album.images?.[0].url}
           alt=""
-          className="h-12 hidden md:inline-flex w-12 rounded-full  border-2 border-red-500"
+          className="h-12  md:inline-flex w-12 rounded-full  border-2 border-red-500"
         />
         {/* song name */}
         <div className="space-y-2">
@@ -103,7 +103,7 @@ export const Player = () => {
       {/* middle session */}
       {/* Icons */}
       <div className="flex items-center justify-evenly">
-        <SwitchHorizontalIcon className="button" />
+        <SwitchHorizontalIcon className="button mobile" />
         <RewindIcon
           // onClick={() => spotifyApi.skipToPrevious()}
           className="button"
@@ -118,15 +118,17 @@ export const Player = () => {
           onClick={() => spotifyApi.skipToNext()}
           className="button"
         />
-        <ReplyIcon className="button" />
+        <ReplyIcon className="button hidden sm:block" />
       </div>
 
       {/* right side volume */}
       <div
-        className="flex items-center
+        className=" items-center
        justify-end pr-5
        md:space-x-4
-        space-x-4"
+        space-x-4
+        hidden md:flex
+        "
       >
         <VolumeDownIcon
           onClick={() => volume > 0 && setVolume(volume - 10)}

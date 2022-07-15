@@ -3,10 +3,10 @@ import {
   SearchIcon,
   LibraryIcon,
   PlusCircleIcon,
-  HeartIcon,
   RssIcon,
   LogoutIcon,
 } from "@heroicons/react/outline";
+import { HeartIcon } from "@heroicons/react/solid";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -63,13 +63,13 @@ const Slider = () => {
 
         <hr className="border-t-[0.1px] border-gray-900" />
         {/* second */}
-        <button className="flex  items-center space-x-2 hover:text-white ">
+        <button className="flex   items-center space-x-2 hover:text-white ">
           <PlusCircleIcon className="h-5 w-5" />
           <p>Create Playlist</p>
         </button>
 
         <button className="flex  items-center space-x-2 hover:text-white ">
-          <HeartIcon className="h-5 w-5" />
+          <HeartIcon className="h-5 w-5 text-green-500" />
           <p>Liked Songs</p>
         </button>
         {/* Search */}
